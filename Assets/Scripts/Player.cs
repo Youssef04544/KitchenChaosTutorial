@@ -4,11 +4,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float movSpeed = 7f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
+    private bool isWalking = false;
 
     // Update is called once per frame
     void Update()
@@ -33,9 +29,16 @@ public class Player : MonoBehaviour
         inputVector = inputVector.normalized;
 
         Vector3 movDir = new Vector3(inputVector.x, 0, inputVector.y);
+
+        isWalking = movDir != Vector3.zero;
         transform.position += movDir * Time.deltaTime * movSpeed;
         float rotateSpeed = 10f;
         transform.forward = Vector3.Slerp(transform.forward, movDir, rotateSpeed*Time.deltaTime);
 
+    }
+
+    public bool IsWalking ()
+    {
+        return isWalking;
     }
 }
