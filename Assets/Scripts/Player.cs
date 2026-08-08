@@ -5,11 +5,27 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float movSpeed = 7f;
-    [SerializeField] GameInput gameInput;
+    [SerializeField] private GameInput gameInput;
+    [SerializeField] private LayerMask countersLayerMask;
+
     private bool isWalking = false;
     private Vector3 lastInteractDirection = Vector3.zero;
+    private ClearCounter selectedCounter;
 
-    // Update is called once per frame
+
+    private void Start()
+    {
+        gameInput.OnInteract += GameInput_OnInteract;
+    }
+
+    private void GameInput_OnInteract(object sender, EventArgs e)
+    {
+        if (selectedCounter)
+        {
+            selectedCounter.Interact();
+        }
+    }
+
     void Update()
     {
         HandleMovement();
@@ -28,13 +44,21 @@ public class Player : MonoBehaviour
             lastInteractDirection = movDir;
         }
         float interactDistance = 2f;
-        if(Physics.Raycast(transform.position, lastInteractDirection,out RaycastHit raycastHit, interactDistance))
+        if(Physics.Raycast(transform.position, lastInteractDirection,out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
-            Debug.Log(raycastHit.transform);
-        }
-        else
+            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            {
+                if(clearCounter != selectedCounter)
+                {
+                    selectedCounter = clearCounter;
+                }
+            }else
+            {
+                selectedCounter = null; //if we find something but it's not a clearcounter
+            }
+        } else
         {
-            Debug.Log("--");
+            selectedCounter = null; //if we dont find anything
         }
     }
 

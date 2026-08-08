@@ -463,6 +463,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   movSpeed: 7
   gameInput: {fileID: 1535037622}
+  countersLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &812121840
 GameObject:
   m_ObjectHideFlags: 0
