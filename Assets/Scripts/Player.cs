@@ -2,8 +2,17 @@ using System;
 using Unity.VisualScripting.InputSystem;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour 
 {
+
+    public static Player Instance { get; private set; }
+    
+    public event EventHandler<OnSelectedCounterChangedEventArgs>OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs {
+        public ClearCounter selectedClearCounter;
+    }
+    
+    
     [SerializeField] private float movSpeed = 7f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
@@ -12,6 +21,14 @@ public class Player : MonoBehaviour
     private Vector3 lastInteractDirection = Vector3.zero;
     private ClearCounter selectedCounter;
 
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Debug.LogError("There is more than one Player Instance");
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -50,16 +67,25 @@ public class Player : MonoBehaviour
             {
                 if(clearCounter != selectedCounter)
                 {
-                    selectedCounter = clearCounter;
+                    SetSelectedCounter(clearCounter);
                 }
             }else
             {
-                selectedCounter = null; //if we find something but it's not a clearcounter
+                SetSelectedCounter(null); //if we find something but it's not a clearcounter
             }
         } else
         {
-            selectedCounter = null; //if we dont find anything
+            SetSelectedCounter(null); //if we dont find anything
         }
+    }
+
+    private void SetSelectedCounter(ClearCounter selectedClearCounter)
+    {
+        selectedCounter = selectedClearCounter;
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
+        {
+            selectedClearCounter = selectedClearCounter
+        });
     }
 
     private void HandleMovement()
