@@ -598,6 +598,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3960780447629763326, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6c2493972227eb7448272b34ce3d7769, type: 2}
     - target: {fileID: 4000371413052734555, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.4
@@ -647,6 +651,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
+--- !u!114 &1531455650 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3960780447629763326, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
+  m_PrefabInstance: {fileID: 1511739216}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99c46d2090dc2ca4d94fd6c0f9913d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearCounter
 --- !u!1 &1535037621
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +936,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3960780447629763326, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
+      propertyPath: testing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960780447629763326, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 4130e12bcc667734cbd2cf86b8828bb0, type: 2}
+    - target: {fileID: 3960780447629763326, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
+      propertyPath: targetClearCounter
+      value: 
+      objectReference: {fileID: 1531455650}
     - target: {fileID: 4000371413052734555, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -960,6 +987,10 @@ PrefabInstance:
     - target: {fileID: 4000371413052734555, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5134918032064195089, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6139381209110000042, guid: 173e3bf5519e05a4faa33011aae81c77, type: 3}
       propertyPath: m_Name
