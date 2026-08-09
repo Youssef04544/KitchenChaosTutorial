@@ -1,29 +1,32 @@
 using System;
-using Unity.VisualScripting.InputSystem;
 using UnityEngine;
 
-public class Player : MonoBehaviour 
+public class Player : MonoBehaviour, IKitchenObjectParent
 {
 
     public static Player Instance { get; private set; }
-    
-    public event EventHandler<OnSelectedCounterChangedEventArgs>OnSelectedCounterChanged;
-    public class OnSelectedCounterChangedEventArgs : EventArgs {
+
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
         public ClearCounter selectedClearCounter;
     }
-    
-    
+
+
     [SerializeField] private float movSpeed = 7f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
+    [SerializeField] private Transform kitchenObjectHoldPoint;
 
     private bool isWalking = false;
     private Vector3 lastInteractDirection = Vector3.zero;
     private ClearCounter selectedCounter;
+    private KitchenObject kitchenObject;
+
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Debug.LogError("There is more than one Player Instance");
         }
@@ -39,7 +42,7 @@ public class Player : MonoBehaviour
     {
         if (selectedCounter)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
     }
 
@@ -54,26 +57,28 @@ public class Player : MonoBehaviour
         Vector2 inputVector = gameInput.InputVectorNormalized();
 
         Vector3 movDir = new Vector3(inputVector.x, 0, inputVector.y);
-        
+
 
         if (movDir != Vector3.zero)
         {
             lastInteractDirection = movDir;
         }
         float interactDistance = 2f;
-        if(Physics.Raycast(transform.position, lastInteractDirection,out RaycastHit raycastHit, interactDistance, countersLayerMask))
+        if (Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
-            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
-                if(clearCounter != selectedCounter)
+                if (clearCounter != selectedCounter)
                 {
                     SetSelectedCounter(clearCounter);
                 }
-            }else
+            }
+            else
             {
                 SetSelectedCounter(null); //if we find something but it's not a clearcounter
             }
-        } else
+        }
+        else
         {
             SetSelectedCounter(null); //if we dont find anything
         }
@@ -130,8 +135,34 @@ public class Player : MonoBehaviour
         transform.forward = Vector3.Slerp(transform.forward, movDir, rotateSpeed * Time.deltaTime);
     }
 
-    public bool IsWalking ()
+    public bool IsWalking()
     {
         return isWalking;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
+
+    public void ClearKitchenObject()
+    {
+        if (kitchenObject)
+        {
+            kitchenObject = null;
+        }
+    }
+    public bool HasKitchenObject()
+    {
+        return kitchenObject != null;
+    }
+    public Transform GetKitchenObjectFollowTransform()
+    {
+        return kitchenObjectHoldPoint;
     }
 }
