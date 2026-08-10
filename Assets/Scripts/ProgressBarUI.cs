@@ -10,7 +10,7 @@ public class ProgressBarUI : MonoBehaviour
     void Start()
     {
         cuttingCounter.OnCuttingProgressChanged += CuttingCounter_OnCuttingProgressChanged;
-
+        barImage.fillAmount = 0f;
         Hide();
     }
 
@@ -27,11 +27,6 @@ public class ProgressBarUI : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void Hide()
     {
