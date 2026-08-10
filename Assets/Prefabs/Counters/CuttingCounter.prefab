@@ -289,6 +289,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CuttingCounter
   counterTopPoint: {fileID: 8393824237257662724}
   tomatoSlicesSO: {fileID: 11400000, guid: 074598a94c6251f4295f1fe9fa210e4b, type: 2}
+  cuttingRecipeSOArray:
+  - {fileID: 11400000, guid: 67f3820639147bc4798e62dcc79a94d9, type: 2}
+  - {fileID: 11400000, guid: 670a586eb3a8d1244b7ad3dbeefbad81, type: 2}
+  - {fileID: 11400000, guid: 444d98870868e78489bb54516b0a5214, type: 2}
 --- !u!4 &4787301842341779490 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000371413052734555, guid: 0e71de7e95276c44094daa9761e5d061, type: 3}
