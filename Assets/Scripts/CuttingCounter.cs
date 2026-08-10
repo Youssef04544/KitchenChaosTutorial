@@ -5,11 +5,14 @@ public class CuttingCounter : BaseCounter
 
     [SerializeField] private KitchenObjectSO tomatoSlicesSO;
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
+
+    private int cuttingProgress;
     public override void Interact(Player player)
     {
         if (!HasKitchenObject() && player.HasKitchenObject() && GetRecipeWithInput(player.GetKitchenObject().GetKitchenObjectSO()))
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
+            cuttingProgress = 0;
 
         }
         else if (HasKitchenObject() && !player.HasKitchenObject())
@@ -28,8 +31,13 @@ public class CuttingCounter : BaseCounter
 
             if (validRecipe)
             {
-                GetKitchenObject().DestroySelf();
-                KitchenObject.SpawnKitchenObject(validRecipe.output, this);
+                cuttingProgress++;
+                if (cuttingProgress >= validRecipe.cuttingProgressMax)
+                {
+                    GetKitchenObject().DestroySelf();
+                    KitchenObject.SpawnKitchenObject(validRecipe.output, this);
+                }
+
             }
         }
     }
