@@ -11,7 +11,6 @@ public class CuttingCounter : BaseCounter
         public float CuttingProgressNormalized;
     }
 
-    [SerializeField] private KitchenObjectSO tomatoSlicesSO;
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
 
     private int cuttingProgress;
