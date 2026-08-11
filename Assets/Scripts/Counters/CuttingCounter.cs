@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-public class CuttingCounter : BaseCounter
+public class CuttingCounter : BaseCounter, IHasProgress
 {
     public event EventHandler OnCuttingPerformed;
-    public event EventHandler<OnCuttingProgressChangedEventArgs> OnCuttingProgressChanged;
+    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
 
-    public class OnCuttingProgressChangedEventArgs : EventArgs
+    public class OnProgressChangedEventArgs : EventArgs
     {
-        public float CuttingProgressNormalized;
+        public float progressNormalized;
     }
 
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
@@ -21,9 +21,9 @@ public class CuttingCounter : BaseCounter
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
             cuttingProgress = 0;
-            OnCuttingProgressChanged?.Invoke(this, new OnCuttingProgressChangedEventArgs
+            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
             {
-                CuttingProgressNormalized = 0
+                progressNormalized = 0
             });
 
         }
@@ -31,9 +31,9 @@ public class CuttingCounter : BaseCounter
         {
             GetKitchenObject().SetKitchenObjectParent(player);
             cuttingProgress = 0;
-            OnCuttingProgressChanged?.Invoke(this, new OnCuttingProgressChangedEventArgs
+            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
             {
-                CuttingProgressNormalized = 0
+                progressNormalized = 0
             });
         }
     }
@@ -50,9 +50,9 @@ public class CuttingCounter : BaseCounter
             {
                 cuttingProgress++;
                 OnCuttingPerformed?.Invoke(this, EventArgs.Empty);
-                OnCuttingProgressChanged?.Invoke(this, new OnCuttingProgressChangedEventArgs
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                 {
-                    CuttingProgressNormalized = (float)cuttingProgress / validRecipe.cuttingProgressMax
+                    progressNormalized = (float)cuttingProgress / validRecipe.cuttingProgressMax
                 });
                 if (cuttingProgress >= validRecipe.cuttingProgressMax)
                 {
