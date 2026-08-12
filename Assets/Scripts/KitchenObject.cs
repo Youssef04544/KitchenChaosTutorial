@@ -48,4 +48,10 @@ public class KitchenObject : MonoBehaviour
         kitchenObject.SetKitchenObjectParent(kitchenObjectParent);
         return kitchenObject;
     }
+
+    public bool TryGetPlateKitchenObject(out PlateKitchenObject plateKitchenObject)
+    {
+        return TryGetComponent<PlateKitchenObject>(out plateKitchenObject);
+
+    }
 }

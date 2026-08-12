@@ -28,13 +28,13 @@ public class StoveCounter : BaseCounter, IHasProgress
     private State state;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         state = State.Idle;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (HasKitchenObject())
         {
@@ -104,18 +104,40 @@ public class StoveCounter : BaseCounter, IHasProgress
                 progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
             });
         }
-        else if (HasKitchenObject() && !player.HasKitchenObject())
+        else if (HasKitchenObject())
         {
-            GetKitchenObject().SetKitchenObjectParent(player);
-            state = State.Idle;
-            OnStoveStateChanged?.Invoke(this, new OnStoveStateChangedEventArgs
+            if (!player.HasKitchenObject())
             {
-                state = state
-            });
-            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                GetKitchenObject().SetKitchenObjectParent(player);
+                state = State.Idle;
+                OnStoveStateChanged?.Invoke(this, new OnStoveStateChangedEventArgs
+                {
+                    state = state
+                });
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = 0f
+                });
+            }
+            else
             {
-                progressNormalized = 0f
-            });
+                if (player.GetKitchenObject().TryGetPlateKitchenObject(out PlateKitchenObject plateKitchenObject))
+                {
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
+                    {
+                        GetKitchenObject().DestroySelf();
+                        state = State.Idle;
+                        OnStoveStateChanged?.Invoke(this, new OnStoveStateChangedEventArgs
+                        {
+                            state = state
+                        });
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                        {
+                            progressNormalized = 0f
+                        });
+                    }
+                }
+            }
         }
     }
     private FryingRecipeSO GetFryingRecipeSOWithInput(KitchenObjectSO inputKitchenObjectSO)

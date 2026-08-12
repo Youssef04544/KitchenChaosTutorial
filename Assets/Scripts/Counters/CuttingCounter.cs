@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class CuttingCounter : BaseCounter, IHasProgress
@@ -27,14 +28,28 @@ public class CuttingCounter : BaseCounter, IHasProgress
             });
 
         }
-        else if (HasKitchenObject() && !player.HasKitchenObject())
+        else if (HasKitchenObject())
         {
-            GetKitchenObject().SetKitchenObjectParent(player);
-            cuttingProgress = 0;
-            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+            if (!player.HasKitchenObject())
             {
-                progressNormalized = 0
-            });
+                GetKitchenObject().SetKitchenObjectParent(player);
+                cuttingProgress = 0;
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = 0
+                });
+            }
+            else
+            {
+                if (player.GetKitchenObject().TryGetPlateKitchenObject(out PlateKitchenObject plateKitchenObject))
+                {
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
+                    {
+                        GetKitchenObject().DestroySelf();
+                    }
+                }
+            }
+
         }
     }
 
