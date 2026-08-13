@@ -29,7 +29,6 @@ public class PlateCompleteVisual : MonoBehaviour
 
     private void PlateKitchenObject_OnIngredientAdded(object sender, PlateKitchenObject.OnIngredientAddedEventArgs e)
     {
-        Debug.Log("visual update of plate??");
         foreach (KitchenObjectSO_GameObjectVisual kitchenObjectSO_GameObjectVisual in kitchenObjectSOGameObjectVisualArray)
         {
             if (kitchenObjectSO_GameObjectVisual.kitchenObjectSO == e.kitchenObjectSO)

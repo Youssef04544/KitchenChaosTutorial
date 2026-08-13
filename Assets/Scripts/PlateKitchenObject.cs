@@ -13,7 +13,7 @@ public class PlateKitchenObject : KitchenObject
     [SerializeField] private List<KitchenObjectSO> validIngredientsList;
 
 
-    private List<KitchenObjectSO> ingredientsList;
+    private List<KitchenObjectSO> kitchenObjectSOlist;
 
     private bool hasMeatPatty = false;
     private const string MEAT_PATTY_COOKED = "MeatPattyCooked";
@@ -21,13 +21,13 @@ public class PlateKitchenObject : KitchenObject
     private void Awake()
     {
 
-        ingredientsList = new List<KitchenObjectSO>();
+        kitchenObjectSOlist = new List<KitchenObjectSO>();
     }
 
 
     public bool TryAddIngredient(KitchenObjectSO kitchenObjectSO)
     {
-        if (validIngredientsList.Contains(kitchenObjectSO) && !ingredientsList.Contains(kitchenObjectSO))
+        if (validIngredientsList.Contains(kitchenObjectSO) && !kitchenObjectSOlist.Contains(kitchenObjectSO))
         {
             if (kitchenObjectSO.objectName is MEAT_PATTY_COOKED or MEAT_PATTY_BURNED)
             {
@@ -40,7 +40,7 @@ public class PlateKitchenObject : KitchenObject
                     return false;
                 }
             }
-            ingredientsList.Add(kitchenObjectSO);
+            kitchenObjectSOlist.Add(kitchenObjectSO);
             OnIngredientAdded?.Invoke(this, new OnIngredientAddedEventArgs
             {
                 kitchenObjectSO = kitchenObjectSO,
@@ -52,5 +52,10 @@ public class PlateKitchenObject : KitchenObject
             return false;
         }
 
+    }
+
+    public List<KitchenObjectSO> GetKitchenObjectSOList()
+    {
+        return kitchenObjectSOlist;
     }
 }
