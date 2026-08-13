@@ -1,4 +1,3 @@
-using UnityEngine;
 public class ClearCounter : BaseCounter
 {
 
@@ -33,8 +32,10 @@ public class ClearCounter : BaseCounter
                 }
                 else
                 {
+                    //Player is not carrying a plate but something else
                     if (GetKitchenObject().TryGetPlateKitchenObject(out plateKitchenObject))
                     {
+                        //Counter is holding a plate
                         if (plateKitchenObject.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO()))
                         {
                             player.GetKitchenObject().DestroySelf();
