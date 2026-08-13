@@ -15,6 +15,9 @@ public class PlateKitchenObject : KitchenObject
 
     private List<KitchenObjectSO> ingredientsList;
 
+    private bool hasMeatPatty = false;
+    private const string MEAT_PATTY_COOKED = "MeatPattyCooked";
+    private const string MEAT_PATTY_BURNED = "MeatPattyBurned";
     private void Awake()
     {
 
@@ -26,6 +29,17 @@ public class PlateKitchenObject : KitchenObject
     {
         if (validIngredientsList.Contains(kitchenObjectSO) && !ingredientsList.Contains(kitchenObjectSO))
         {
+            if (kitchenObjectSO.objectName is MEAT_PATTY_COOKED or MEAT_PATTY_BURNED)
+            {
+                if (!hasMeatPatty)
+                {
+                    hasMeatPatty = true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             ingredientsList.Add(kitchenObjectSO);
             OnIngredientAdded?.Invoke(this, new OnIngredientAddedEventArgs
             {

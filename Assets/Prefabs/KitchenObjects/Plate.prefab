@@ -247,19 +247,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7f4a46ac826e244bbf875f3a62cd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlateCompleteVisual
-  kitchenObjectSO_GameObjectVisual:
+  kitchenObjectSOGameObjectVisualArray:
   - gameObjectVisual: {fileID: 5031340808036068610}
     kitchenObjectSO: {fileID: 11400000, guid: 258d4350f3b01894d91bcef99378595c, type: 2}
+  - gameObjectVisual: {fileID: 5031340808839361408}
+    kitchenObjectSO: {fileID: 11400000, guid: ab7898d463e60da46b091b49bf36642d, type: 2}
+  - gameObjectVisual: {fileID: 5031340807639112142}
+    kitchenObjectSO: {fileID: 11400000, guid: 52bef9e748ea9a14781757e206305d34, type: 2}
+  - gameObjectVisual: {fileID: 5082765644045966224}
+    kitchenObjectSO: {fileID: 11400000, guid: 9a845ae6c588aa142bb4e3c4ede7cc03, type: 2}
   - gameObjectVisual: {fileID: 5031340808851187148}
     kitchenObjectSO: {fileID: 11400000, guid: ace1f5226b147044e9dab7af03cd3fd5, type: 2}
   - gameObjectVisual: {fileID: 5031340807415094810}
     kitchenObjectSO: {fileID: 11400000, guid: 074598a94c6251f4295f1fe9fa210e4b, type: 2}
-  - gameObjectVisual: {fileID: 5031340807639112142}
-    kitchenObjectSO: {fileID: 11400000, guid: 52bef9e748ea9a14781757e206305d34, type: 2}
-  - gameObjectVisual: {fileID: 5031340808839361408}
-    kitchenObjectSO: {fileID: 11400000, guid: ab7898d463e60da46b091b49bf36642d, type: 2}
-  - gameObjectVisual: {fileID: 5082765644045966224}
-    kitchenObjectSO: {fileID: 11400000, guid: 9a845ae6c588aa142bb4e3c4ede7cc03, type: 2}
   plateKitchenObject: {fileID: 664763574640202313}
 --- !u!4 &8158524463028778805 stripped
 Transform:
