@@ -19,12 +19,6 @@ public class DeliveryManager : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
-    {
-
-    }
-
     // Update is called once per frame
     private void Update()
     {
@@ -34,9 +28,9 @@ public class DeliveryManager : MonoBehaviour
             spawnRecipeTimer = spawnRecipeTimerMax;
             if (waitingRecipeSOList.Count < waitingRecipeCountMax)
             {
-                RecipeSO waitingRecipe = recipeListSO.recipseSOList[Random.Range(0, recipeListSO.recipseSOList.Count)];
-                waitingRecipeSOList.Add(waitingRecipe);
-                Debug.Log(waitingRecipe.recipeName);
+                RecipeSO waitingRecipeSO = recipeListSO.recipseSOList[Random.Range(0, recipeListSO.recipseSOList.Count)];
+                waitingRecipeSOList.Add(waitingRecipeSO);
+                Debug.Log(waitingRecipeSO.recipeName);
             }
         }
     }
@@ -47,19 +41,24 @@ public class DeliveryManager : MonoBehaviour
         for (int i = 0; i < waitingRecipeSOList.Count; i++)
         {
             bool deliveryMatchesRecipe = true;
-            if (waitingRecipeSOList[i].kitchenObjectSOList.Count != plateKitchenObject.GetKitchenObjectSOList().Count)
-            {
-                Debug.Log("Recipe list length is not equal to plate list length");
-                continue; //recipe list size does not match plate list size so we skip
-            }
+            if (waitingRecipeSOList[i].kitchenObjectSOList.Count != plateKitchenObject.GetKitchenObjectSOList().Count) continue; //recipe list size does not match plate list size so we skip
+
+            //Create a copy of plateKitchenObjectList to handle duplicate detection for future more complex recipes
+            //For now the plate doesnt even accept duplicates anyways that needs another big refactor
+            List<KitchenObjectSO> plateIngredientsToMatch = new List<KitchenObjectSO>(plateKitchenObject.GetKitchenObjectSOList());
+
             foreach (KitchenObjectSO waitingRecipeKitchenObjectSO in waitingRecipeSOList[i].kitchenObjectSOList)
             {
 
-                bool plateHasRecipeIngredient = plateKitchenObject.GetKitchenObjectSOList().Contains(waitingRecipeKitchenObjectSO);
-
-                if (!plateHasRecipeIngredient)
+                //Use .Contains() on the TEMPORARY list
+                if (plateIngredientsToMatch.Contains(waitingRecipeKitchenObjectSO))
                 {
-                    //Plate is missing this specific ingredient, no need to check for the rest of the ingredients in this recipe
+                    // Match found! Remove it from the checklist so it cannot be double-counted
+                    plateIngredientsToMatch.Remove(waitingRecipeKitchenObjectSO);
+                }
+                else
+                {
+                    // Missing an ingredient (or missing a duplicate of an ingredient)
                     deliveryMatchesRecipe = false;
                     break;
                 }
@@ -69,13 +68,13 @@ public class DeliveryManager : MonoBehaviour
                 //Successful delivery
                 Debug.Log("Successful delivery of " + waitingRecipeSOList[i].recipeName);
                 waitingRecipeSOList.RemoveAt(i);
-                break;
-            }
-            else
-            {
-                Debug.Log("Wrong Delivery, doesn't exist in the current orders");
+                return;
             }
 
+
         }
+
+        //No matches found and player did not deliver a correct recipe
+        Debug.Log("Player did not deliver a correct recipe.");
     }
 }
