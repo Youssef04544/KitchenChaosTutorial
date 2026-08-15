@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager Instance { get; private set; }
+
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
 
-
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -13,6 +18,20 @@ public class SoundManager : MonoBehaviour
         DeliveryManager.Instance.OnDeliveryFailed += DeliveryManager_OnDeliveryFailed;
         Player.Instance.OnObjectPickup += Player_OnObjectPickup;
         TrashCounter.OnObjectTrashed += TrashCounter_OnObjectTrashed;
+        CuttingCounter.OnCut += CuttingCounter_OnCut;
+        BaseCounter.OnObjectDropped += BaseCounter_OnObjectDropped;
+    }
+
+    private void BaseCounter_OnObjectDropped(object sender, System.EventArgs e)
+    {
+        BaseCounter baseCounter = sender as BaseCounter;
+        PlaySound(audioClipRefsSO.objectDrop, baseCounter.transform.position);
+    }
+
+    private void CuttingCounter_OnCut(object sender, System.EventArgs e)
+    {
+        CuttingCounter cuttingCounter = sender as CuttingCounter;
+        PlaySound(audioClipRefsSO.chop, cuttingCounter.transform.position);
     }
 
     private void TrashCounter_OnObjectTrashed(object sender, System.EventArgs e)
@@ -43,5 +62,10 @@ public class SoundManager : MonoBehaviour
     private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume = 1)
     {
         AudioSource.PlayClipAtPoint(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume);
+    }
+
+    public void PlayFootstepsSound(Vector3 position, float volume)
+    {
+        PlaySound(audioClipRefsSO.footstep, position, volume);
     }
 }

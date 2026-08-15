@@ -1372,6 +1372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 769391389}
   - component: {fileID: 769391390}
+  - component: {fileID: 769391391}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1414,6 +1415,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   kitchenObjectHoldPoint: {fileID: 1714493708}
+--- !u!114 &769391391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769391388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac0acd4387684d48a1025ce4a1cd3bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSounds
 --- !u!1001 &786240365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1487,7 +1500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &786355444
 AudioSource:
   m_ObjectHideFlags: 0

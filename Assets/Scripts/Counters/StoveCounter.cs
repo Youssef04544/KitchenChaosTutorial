@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class StoveCounter : BaseCounter, IHasProgress
 {
+
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     public event EventHandler<OnStoveStateChangedEventArgs> OnStoveStateChanged;
     public class OnStoveStateChangedEventArgs : EventArgs
@@ -20,7 +21,6 @@ public class StoveCounter : BaseCounter, IHasProgress
 
     [SerializeField] private FryingRecipeSO[] fryingRecipeSOArray;
     [SerializeField] private BurningRecipeSO[] burningRecipeSOArray;
-
     private FryingRecipeSO fryingRecipeSO;
     private BurningRecipeSO burningRecipeSO;
     private float fryingTimer;
