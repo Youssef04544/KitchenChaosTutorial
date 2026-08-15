@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     {
         public BaseCounter selectedClearCounter;
     }
+    public event EventHandler OnObjectPickup;
 
 
     [SerializeField] private float movSpeed = 7f;
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         }
     }
 
-    void Update()
+    private void Update()
     {
         HandleMovement();
         HandleInteract();
@@ -152,6 +153,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+        if (kitchenObject != null)
+        {
+            OnObjectPickup?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public KitchenObject GetKitchenObject()
