@@ -26,11 +26,6 @@ public class DeliveryManagerUI : MonoBehaviour
         UpdateVisual();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
 
     private void UpdateVisual()
     {
