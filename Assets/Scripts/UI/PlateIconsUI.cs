@@ -38,4 +38,5 @@ public class PlateIconsUI : MonoBehaviour
             iconTransform.gameObject.SetActive(true);
         }
     }
+
 }
