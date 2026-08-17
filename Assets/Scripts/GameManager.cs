@@ -110,11 +110,13 @@ public class GameManager : MonoBehaviour
         if (isGamePaused)
         {
             Time.timeScale = 0f;
+            AudioListener.pause = true;
             OnPaused?.Invoke(this, EventArgs.Empty);
         }
         else
         {
             Time.timeScale = 1f;
+            AudioListener.pause = false;
             OnUnpaused?.Invoke(this, EventArgs.Empty);
         }
     }
