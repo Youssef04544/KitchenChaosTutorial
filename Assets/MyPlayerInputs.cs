@@ -275,8 +275,8 @@ public partial class @MyPlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d6a4cc0a-c31d-4515-9eff-a1dae3575e7f"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""id"": ""1d7f01f1-31c1-401a-bc2f-be82a74209f5"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -286,8 +286,8 @@ public partial class @MyPlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1d7f01f1-31c1-401a-bc2f-be82a74209f5"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""d6a4cc0a-c31d-4515-9eff-a1dae3575e7f"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
