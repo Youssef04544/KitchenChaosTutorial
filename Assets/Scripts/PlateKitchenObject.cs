@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlateKitchenObject : KitchenObject
 {
     public static event EventHandler OnIngredientPickup;
+    public static void ResetStaticData()
+    {
+        OnIngredientPickup = null;
+    }
     public event EventHandler<OnIngredientAddedEventArgs> OnIngredientAdded;
     public class OnIngredientAddedEventArgs : EventArgs
     {

@@ -89,22 +89,25 @@ public class StoveCounter : BaseCounter, IHasProgress
     }
     public override void Interact(Player player)
     {
-        fryingRecipeSO = GetFryingRecipeSOWithInput(player.GetKitchenObject()?.GetKitchenObjectSO());
-        if (!HasKitchenObject() && player.HasKitchenObject() && fryingRecipeSO)
+        if (!HasKitchenObject() && player.HasKitchenObject())
         {
-            player.GetKitchenObject().SetKitchenObjectParent(this);
-            fryingTimer = 0f;
-            state = State.Frying;
-            OnStoveStateChanged?.Invoke(this, new OnStoveStateChangedEventArgs
+            fryingRecipeSO = GetFryingRecipeSOWithInput(player.GetKitchenObject()?.GetKitchenObjectSO());
+            if (fryingRecipeSO)
             {
-                state = state
-            });
-            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-            {
-                progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
-            });
+                player.GetKitchenObject().SetKitchenObjectParent(this);
+                fryingTimer = 0f;
+                state = State.Frying;
+                OnStoveStateChanged?.Invoke(this, new OnStoveStateChangedEventArgs
+                {
+                    state = state
+                });
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
+                });
+            }
         }
-        else if (HasKitchenObject())
+        else if (HasKitchenObject() && state != State.Frying)
         {
             if (!player.HasKitchenObject())
             {

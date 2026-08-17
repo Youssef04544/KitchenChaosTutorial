@@ -3,17 +3,35 @@ using UnityEngine;
 
 public class GameInput : MonoBehaviour
 {
+    public static GameInput Instance;
     public event EventHandler OnInteract;
     public event EventHandler OnInteractAlternate;
+    public event EventHandler OnPause;
 
     private MyPlayerInputs myPlayerInputs;
 
-    void Awake()
+    private void Awake()
     {
+        Instance = this;
         myPlayerInputs = new MyPlayerInputs();
         myPlayerInputs.Player.Enable();
         myPlayerInputs.Player.Interact.performed += Interact_performed;
         myPlayerInputs.Player.InteractAlternate.performed += InteractAlternate_performed;
+        myPlayerInputs.Player.Pause.performed += Pause_performed;
+    }
+
+    private void OnDestroy()
+    {
+        myPlayerInputs.Player.Interact.performed -= Interact_performed;
+        myPlayerInputs.Player.InteractAlternate.performed -= InteractAlternate_performed;
+        myPlayerInputs.Player.Pause.performed -= Pause_performed;
+
+        myPlayerInputs.Dispose();
+    }
+
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPause?.Invoke(this, EventArgs.Empty);
     }
 
     private void InteractAlternate_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -27,7 +45,7 @@ public class GameInput : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
 

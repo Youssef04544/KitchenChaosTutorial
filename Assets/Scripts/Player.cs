@@ -60,6 +60,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
         HandleMovement();
         HandleInteract();
     }

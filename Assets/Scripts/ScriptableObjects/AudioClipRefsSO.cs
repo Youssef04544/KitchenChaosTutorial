@@ -9,7 +9,7 @@ public class AudioClipRefsSO : ScriptableObject
     public AudioClip[] footstep;
     public AudioClip[] objectDrop;
     public AudioClip[] ObjectPickup;
-    public AudioClip[] panSizzle;
-    public AudioClip trash;
+    public AudioClip panSizzle;
+    public AudioClip[] trash;
     public AudioClip[] warning;
 }
