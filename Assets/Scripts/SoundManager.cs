@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    private const string PLAYERPREFS_SFX_VOLUME = "PlayerPrefs SFX Volume";
+
     public static SoundManager Instance { get; private set; }
 
     public event EventHandler OnVolumeChanged;
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
 
-    private float volume = 1f;
+    private float volume;
 
     private void Awake()
     {
         Instance = this;
+        volume = PlayerPrefs.GetFloat(PLAYERPREFS_SFX_VOLUME, 1f);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -88,6 +91,8 @@ public class SoundManager : MonoBehaviour
             volume = 0f;
         }
         OnVolumeChanged?.Invoke(this, EventArgs.Empty);
+        PlayerPrefs.SetFloat(PLAYERPREFS_SFX_VOLUME, volume);
+        PlayerPrefs.Save();
     }
     public float GetVolume()
     {
