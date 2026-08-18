@@ -123,7 +123,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         {
             //check if we can move on the X or Z so we dont block movement completely when trying to slide while wall hugging
             Vector3 movDirX = new Vector3(movDir.x, 0, 0).normalized;
-            canMove = movDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirX, moveDistance);
+            canMove = (movDir.x >= 0.35f || movDir.x <= -0.35f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirX, moveDistance);
+            Debug.Log("" + movDir.x + "  " + canMove);
 
             if (canMove)
             {
@@ -132,7 +133,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             else
             {
                 Vector3 movDirZ = new Vector3(0, 0, movDir.z).normalized;
-                canMove = movDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirZ, moveDistance);
+                canMove = (movDir.z >= 0.35f || movDir.z <= -0.35f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirZ, moveDistance);
                 if (canMove)
                 {
                     movDir = movDirZ;
