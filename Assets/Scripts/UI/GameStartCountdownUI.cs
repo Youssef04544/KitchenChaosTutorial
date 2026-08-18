@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class GameStartCountdownUI : MonoBehaviour
 {
+    private const string NUMBER_POPUP = "NumberPopup";
 
     [SerializeField] private TextMeshProUGUI countdownText;
+
+    private Animator animator;
+
+    private int previousCountdownNumber;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -28,7 +38,14 @@ public class GameStartCountdownUI : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        int currentCountDownNumer = Mathf.CeilToInt(GameManager.Instance.GetCountdownToStartTimer());
         countdownText.text = Mathf.Ceil(GameManager.Instance.GetCountdownToStartTimer()).ToString();
+        if (currentCountDownNumer != previousCountdownNumber)
+        {
+            previousCountdownNumber = currentCountDownNumer;
+            animator.SetTrigger(NUMBER_POPUP);
+            SoundManager.Instance.PlayCountdownSound();
+        }
     }
 
     private void Show()
