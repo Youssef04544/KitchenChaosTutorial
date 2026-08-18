@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,8 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Button gamepadPauseButton;
     [SerializeField] private Transform pressToRebindKeyTransform;
 
+    private Action onCloseButtonAction;
+
     private void Awake()
     {
         Instance = this;
@@ -45,6 +48,7 @@ public class OptionsUI : MonoBehaviour
         });
         closeButton.onClick.AddListener(() =>
         {
+            onCloseButtonAction();
             Hide();
         });
 
@@ -102,9 +106,11 @@ public class OptionsUI : MonoBehaviour
         gamepadPauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_Pause);
     }
 
-    public void Show()
+    public void Show(Action onCloseButtonAction)
     {
+        this.onCloseButtonAction = onCloseButtonAction;
         gameObject.SetActive(true);
+        soundEffectsVolumeButton.Select();
     }
     private void Hide()
     {

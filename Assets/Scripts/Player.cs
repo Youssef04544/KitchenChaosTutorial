@@ -124,7 +124,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             //check if we can move on the X or Z so we dont block movement completely when trying to slide while wall hugging
             Vector3 movDirX = new Vector3(movDir.x, 0, 0).normalized;
             canMove = (movDir.x >= 0.35f || movDir.x <= -0.35f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirX, moveDistance);
-            Debug.Log("" + movDir.x + "  " + canMove);
 
             if (canMove)
             {
