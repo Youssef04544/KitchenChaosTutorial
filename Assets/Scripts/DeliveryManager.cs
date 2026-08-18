@@ -28,7 +28,7 @@ public class DeliveryManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (waitingRecipeSOList.Count == waitingRecipeCountMax) return;
+        if (waitingRecipeSOList.Count == waitingRecipeCountMax || !GameManager.Instance.IsGamePlaying()) return;
         spawnRecipeTimer -= Time.deltaTime;
         if (spawnRecipeTimer <= 0)
         {

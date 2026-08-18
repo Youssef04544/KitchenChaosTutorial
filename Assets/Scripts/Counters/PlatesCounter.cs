@@ -15,18 +15,18 @@ public class PlatesCounter : BaseCounter
     private int platesSpawnedAmount = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
 
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (platesSpawnedAmount < platesSpawnedAmountMax)
         {
             spawnPlateTimer += Time.deltaTime;
-            if (spawnPlateTimer > spawnPlateTimerMax)
+            if (spawnPlateTimer > spawnPlateTimerMax && GameManager.Instance.IsGamePlaying())
             {
                 spawnPlateTimer = 0f;
                 platesSpawnedAmount++;

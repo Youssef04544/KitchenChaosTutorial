@@ -11,6 +11,8 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAlternate;
     public event EventHandler OnPause;
 
+    public event EventHandler onKeybindsUpdated;
+
     public enum Binding
     {
         Move_Up,
@@ -174,8 +176,10 @@ public class GameInput : MonoBehaviour
 
                     PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, myPlayerInputs.SaveBindingOverridesAsJson());
                     PlayerPrefs.Save();
+                    onKeybindsUpdated?.Invoke(this, EventArgs.Empty);
                 }
             })
             .Start();
+
     }
 }
