@@ -8,9 +8,29 @@ public class StoveCounterSound : MonoBehaviour
 
     private AudioSource audioSource;
 
+    private bool isStoveFried = false;
+    private float timerToWarning = 0.5f;
+    private float warningSoundCooldown = 0.2f;
+    private float warningSoundTimer;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        stoveCounter.OnProgressChanged += StoveCounter_OnProgressChanged;
+    }
+
+    private void StoveCounter_OnProgressChanged(object sender, IHasProgress.OnProgressChangedEventArgs e)
+    {
+        if (e.progressNormalized >= timerToWarning && isStoveFried)
+        {
+            warningSoundTimer -= Time.deltaTime;
+            if (warningSoundTimer <= 0)
+            {
+                SoundManager.Instance.PlayWarningSound(transform.position);
+                warningSoundTimer = warningSoundCooldown;
+            }
+
+        }
     }
 
     private void Start()
@@ -28,6 +48,7 @@ public class StoveCounterSound : MonoBehaviour
     private void StoveCounter_OnStoveStateChanged(object sender, StoveCounter.OnStoveStateChangedEventArgs e)
     {
         bool playSound = e.state == StoveCounter.State.Frying || e.state == StoveCounter.State.Fried;
+        isStoveFried = e.state == StoveCounter.State.Fried;
         if (playSound)
         {
             audioSource.Play();

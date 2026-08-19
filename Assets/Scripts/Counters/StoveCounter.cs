@@ -55,6 +55,10 @@ public class StoveCounter : BaseCounter, IHasProgress
                         burningRecipeSO = GetBurningRecipeSOWithInput(fryingRecipeSO.output);
                         burningTimer = 0f;
                         state = State.Fried;
+                        OnStoveStateChanged?.Invoke(this, new OnStoveStateChangedEventArgs
+                        {
+                            state = state
+                        });
                     }
                     break;
                 case State.Fried:
